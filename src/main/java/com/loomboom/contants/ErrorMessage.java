@@ -6,7 +6,7 @@ public class ErrorMessage {
     public static final String DUPLICATE_VALUE = "Product Already Exists";
     public static final String NOT_EXISTS = "Product Not Exists";
     public static final String USER_EXISTS = "User Already Exists";
-    public static final String USER_NOT_EXISTS = "User Already Exists";
+    public static final String USER_NOT_EXISTS = "User Not Exists";
     public static final String EMPTY_FIRST_NAME = "First name cannot be empty";
     public static final String EMPTY_LAST_NAME = "Last name cannot be empty";
     public static final String EMPTY_GENDER = "Gender cannot be empty";

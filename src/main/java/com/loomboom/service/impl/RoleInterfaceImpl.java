@@ -1,13 +1,19 @@
 package com.loomboom.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.loomboom.enums.RoleEnum;
 import com.loomboom.model.Role;
 import com.loomboom.repository.RoleRepository;
 import com.loomboom.service.RoleService;
 
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
 public class RoleInterfaceImpl implements RoleService {
 
-    RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public Role findByName(RoleEnum role) {

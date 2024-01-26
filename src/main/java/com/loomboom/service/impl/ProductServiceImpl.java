@@ -32,11 +32,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(Product product, Long id) {
-        if (empty(id) || (!empty(id) && findById(id) == null)) {
+        if (findById(id) == null) {
             throw new ApiRequestException(NOT_EXISTS, HttpStatus.BAD_REQUEST);
         }
-        String productTitle = product.getTitle();
-        if (!empty(productTitle) && findByTitle(productTitle) != null) {
+        Product duplicateProduct = findByTitle(product.getTitle());
+
+        if (duplicateProduct != null && !duplicateProduct.getId().equals(id)) {
             throw new ApiRequestException(DUPLICATE_VALUE, HttpStatus.BAD_REQUEST);
         }
         product.setId(id);
@@ -45,8 +46,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean deleteProductById(Long id) {
-        Product product = productRepository.findById(id).orElse(null);
-        if (empty(id) || (!empty(id) && product == null)) {
+        Product product = findById(id);
+        if (product == null) {
             throw new ApiRequestException(NOT_EXISTS, HttpStatus.BAD_REQUEST);
         }
         productRepository.deleteById(id);
@@ -56,16 +57,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findByTitle(String title) {
-        return productRepository.findByTitle(title);
+        if (!empty(title)) {
+            return productRepository.findByTitle(title).orElse(null);
+        }
+        return null;
     }
 
     @Override
     public Product findById(Long id) {
-        Product product = productRepository.findById(id).orElse(null);
-        if (empty(id) || (!empty(id) && product == null)) {
-            throw new ApiRequestException(NOT_EXISTS, HttpStatus.BAD_REQUEST);
+        if (!empty(id)) {
+            return productRepository.findById(id).orElse(null);
         }
-        return product;
+        return null;
     }
 
 }

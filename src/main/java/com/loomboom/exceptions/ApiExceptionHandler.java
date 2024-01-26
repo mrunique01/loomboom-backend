@@ -1,7 +1,9 @@
 package com.loomboom.exceptions;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -17,9 +19,15 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(NumberFormatException.class)
-    public ResponseEntity<Object> accountDisabledException() {
+    public ResponseEntity<Object> handleInvalidParamType() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse(false, "Please Enter Valid Id"));
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<Object> handleRequestMethodNotAllowed() {
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(new ExceptionResponse(false, "Method Not Allowed"));
     }
 
 }
