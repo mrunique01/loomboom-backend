@@ -8,18 +8,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.loomboom.dto.api.ApiResponse;
 import com.loomboom.dto.user.RegisterRequest;
 import com.loomboom.dto.user.UserRequest;
 import com.loomboom.dto.user.UserResponse;
 import com.loomboom.mapper.UserMapper;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import static com.loomboom.contants.PathConstants.*;
-
 import java.util.List;
 
 @RestController
@@ -30,7 +26,6 @@ public class UserController {
 
     @GetMapping(ALL_USERS)
     public ResponseEntity<List<UserResponse>> getUsers() {
-
         List<UserResponse> users = userMapper.getAllUsers();
         return ResponseEntity.ok(users);
 

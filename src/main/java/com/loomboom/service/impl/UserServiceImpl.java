@@ -3,7 +3,6 @@ package com.loomboom.service.impl;
 import static com.loomboom.contants.ErrorMessage.*;
 import static com.loomboom.utils.StringUtils.empty;
 import static com.loomboom.enums.RoleEnum.USER;
-
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import com.loomboom.model.User;
 import com.loomboom.repository.UserRepository;
 import com.loomboom.service.RoleService;
 import com.loomboom.service.UserService;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleService roleService;
+
 
     @Override
     public List<User> getAllUsers() {
@@ -37,7 +36,7 @@ public class UserServiceImpl implements UserService {
         if (role == null) {
             role = roleService.save(USER);
         }
-        user.setRole(List.of(role));
+        user.setRoles(List.of(role));
         return userRepository.save(user);
     }
 
@@ -79,4 +78,5 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
 }

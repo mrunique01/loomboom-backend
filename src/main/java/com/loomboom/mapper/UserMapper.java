@@ -1,17 +1,14 @@
 package com.loomboom.mapper;
 
 import java.util.List;
-
 import org.springframework.stereotype.Component;
 import com.loomboom.dto.api.ApiResponse;
 import com.loomboom.dto.user.RegisterRequest;
 import com.loomboom.dto.user.UserRequest;
 import com.loomboom.dto.user.UserResponse;
 import com.loomboom.model.User;
-
 import static com.loomboom.contants.SuccessMessage.*;
 import com.loomboom.service.UserService;
-
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -44,4 +41,5 @@ public class UserMapper {
         userService.deleteUserById(id);
         return new ApiResponse(true, USER_DELETED);
     }
+
 }

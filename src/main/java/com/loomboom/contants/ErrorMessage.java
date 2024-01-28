@@ -14,5 +14,6 @@ public class ErrorMessage {
     public static final String EMAIL_CANNOT_BE_EMPTY = "Email cannot be empty";
     public static final String PASSWORD_CHARACTER_LENGTH = "The password must be between 6 and 16 characters long";
     public static final String EMPTY_PHONE_NUMBER = "Phone number cannot be empty";
+    public static final String INVALID_EMAIL_PASSWORD = "Invalid Username or Password !!";
 
 }

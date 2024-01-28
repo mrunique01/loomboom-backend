@@ -29,7 +29,7 @@ public class Role {
     @Column(unique = true)
     private RoleEnum name;
 
-    @ManyToMany(mappedBy = "role")
+    @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
 }
