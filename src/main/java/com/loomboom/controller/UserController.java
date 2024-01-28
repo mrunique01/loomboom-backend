@@ -4,12 +4,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.loomboom.dto.api.ApiResponse;
-import com.loomboom.dto.user.RegisterRequest;
 import com.loomboom.dto.user.UserRequest;
 import com.loomboom.dto.user.UserResponse;
 import com.loomboom.mapper.UserMapper;
@@ -35,13 +33,6 @@ public class UserController {
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long userId) {
         UserResponse user = userMapper.findUserById(userId);
         return ResponseEntity.ok(user);
-    }
-
-    @PostMapping(REGISTRATION)
-    public ResponseEntity<UserResponse> registerUser(
-            @RequestBody @Valid RegisterRequest registerRequest) {
-        UserResponse userResponse = userMapper.registerUser(registerRequest);
-        return ResponseEntity.ok(userResponse);
     }
 
     @PutMapping(UPDATE_USER)

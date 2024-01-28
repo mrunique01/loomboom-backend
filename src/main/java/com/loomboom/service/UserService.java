@@ -13,8 +13,6 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    User registerUser(User user);
-
     User findByEmail(String email);
 
     User updateUser(User user, Long id);

@@ -4,37 +4,29 @@ import static com.loomboom.contants.JwtConstants.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.function.Function;
-
 import javax.crypto.SecretKey;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import com.loomboom.model.User;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 @Component
-public class JwtHelperImpl implements JwtHelper{
+public class JwtHelperImpl implements JwtHelper {
 
     private Integer validity = JWT_VALIDITY;
+    private String secret = JWT_SECRET;
 
-    private String header = JWT_HEADER;
-
-    @Value("${jwt.secret}")
-    private String secret;
-
-    private SecretKey getSigningKey(String secret) {
-        byte[] kBytes = secret.getBytes(StandardCharsets.UTF_8);
-        return Keys.hmacShaKeyFor(kBytes);
+    private SecretKey getSigningKey() {
+        byte[] secretBytes = secret.getBytes(StandardCharsets.UTF_8);
+        return Keys.hmacShaKeyFor(secretBytes);
     }
 
     public String createToken(User user) {
         Date now = new Date();
         Date expriration = new Date(now.getTime() + validity);
         return Jwts.builder().subject(user.getEmail()).issuedAt(now).expiration(expriration)
-                .signWith(getSigningKey(secret), Jwts.SIG.HS256).compact();
+                .signWith(getSigningKey(), Jwts.SIG.HS256).compact();
     }
 
     public String getEmailFromToken(String token) {
@@ -56,7 +48,7 @@ public class JwtHelperImpl implements JwtHelper{
     }
 
     public Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().verifyWith(getSigningKey(token)).build().parseSignedClaims(token).getPayload();
+        return Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload();
     }
 
     public Boolean validateToken(String token, User user) {

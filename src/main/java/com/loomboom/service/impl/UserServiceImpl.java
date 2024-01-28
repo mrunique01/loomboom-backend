@@ -2,15 +2,12 @@ package com.loomboom.service.impl;
 
 import static com.loomboom.contants.ErrorMessage.*;
 import static com.loomboom.utils.StringUtils.empty;
-import static com.loomboom.enums.RoleEnum.USER;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.loomboom.exceptions.ApiRequestException;
-import com.loomboom.model.Role;
 import com.loomboom.model.User;
 import com.loomboom.repository.UserRepository;
-import com.loomboom.service.RoleService;
 import com.loomboom.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleService roleService;
 
 
     @Override
@@ -27,18 +23,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    @Override
-    public User registerUser(User user) {
-        if (findByEmail(user.getEmail()) != null) {
-            throw new ApiRequestException(USER_EXISTS, HttpStatus.BAD_REQUEST);
-        }
-        Role role = roleService.findByName(USER);
-        if (role == null) {
-            role = roleService.save(USER);
-        }
-        user.setRoles(List.of(role));
-        return userRepository.save(user);
-    }
+    // @Override
+    // public User registerUser(User user) {
+    //     if (findByEmail(user.getEmail()) != null) {
+    //         throw new ApiRequestException(USER_EXISTS, HttpStatus.BAD_REQUEST);
+    //     }
+    //     Role role = roleService.findByName(USER);
+    //     if (role == null) {
+    //         role = roleService.save(USER);
+    //     }
+    //     user.setPassword(passwordEncoder.encode(user.getPassword()));
+    //     user.setRoles(List.of(role));
+    //     return userRepository.save(user);
+    // }
 
     @Override
     public User updateUser(User user, Long id) {

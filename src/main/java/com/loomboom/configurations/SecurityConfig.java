@@ -1,6 +1,7 @@
 package com.loomboom.configurations;
 
 import static com.loomboom.contants.PathConstants.LOG_IN;
+import static com.loomboom.contants.PathConstants.REGISTRATION;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +41,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
         security.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
-                auth -> auth.requestMatchers(LOG_IN)
+                auth -> auth.requestMatchers(LOG_IN,REGISTRATION)
                         .permitAll().anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtException))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
