@@ -18,4 +18,6 @@ public class ProductResponse {
     private String category;
 
     private String thumbnail;
+
+    private Integer active;
 }

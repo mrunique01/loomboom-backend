@@ -1,14 +1,20 @@
 package com.loomboom.utils.jwt;
 
 import static com.loomboom.contants.JwtConstants.*;
+
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
 import org.springframework.stereotype.Component;
+
+import com.loomboom.model.Role;
 import com.loomboom.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.lang.Arrays;
 import io.jsonwebtoken.security.Keys;
 
 @Component
@@ -25,12 +31,18 @@ public class JwtHelperImpl implements JwtHelper {
     public String createToken(User user) {
         Date now = new Date();
         Date expriration = new Date(now.getTime() + validity);
-        return Jwts.builder().subject(user.getEmail()).issuedAt(now).expiration(expriration)
+        return Jwts.builder().subject(user.getEmail()).issuedAt(now)
+                .expiration(expriration)
                 .signWith(getSigningKey(), Jwts.SIG.HS256).compact();
     }
 
     public String getEmailFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    private List<Role> getUserRole(String token) {
+        Claims claims = getAllClaimsFromToken(token);
+        return (List<Role>) claims.get(JWT_AUTHORITIES);
     }
 
     private Boolean isTokenExpired(String token) {
@@ -53,7 +65,7 @@ public class JwtHelperImpl implements JwtHelper {
 
     public Boolean validateToken(String token, User user) {
         final String email = getEmailFromToken(token);
-        return (email.equals(user.getEmail())) && !isTokenExpired(token);
+        return (email.equals(user.getEmail())) && !isTokenExpired(token) ;
     }
 
 }

@@ -23,20 +23,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    // @Override
-    // public User registerUser(User user) {
-    //     if (findByEmail(user.getEmail()) != null) {
-    //         throw new ApiRequestException(USER_EXISTS, HttpStatus.BAD_REQUEST);
-    //     }
-    //     Role role = roleService.findByName(USER);
-    //     if (role == null) {
-    //         role = roleService.save(USER);
-    //     }
-    //     user.setPassword(passwordEncoder.encode(user.getPassword()));
-    //     user.setRoles(List.of(role));
-    //     return userRepository.save(user);
-    // }
-
     @Override
     public User updateUser(User user, Long id) {
         if (getUserById(id) == null) {

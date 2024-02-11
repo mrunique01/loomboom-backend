@@ -1,11 +1,11 @@
-package com.loomboom.validations.validator;
+package com.loomboom.utils.validations.validator;
 
 import java.util.logging.Logger;
 
 import org.springframework.stereotype.Component;
 
 import com.loomboom.service.CommonService;
-import com.loomboom.validations.annotations.CheckDuplicate;
+import com.loomboom.utils.validations.annotations.CheckDuplicate;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

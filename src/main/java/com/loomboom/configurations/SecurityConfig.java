@@ -3,6 +3,9 @@ package com.loomboom.configurations;
 import static com.loomboom.contants.PathConstants.LOG_IN;
 import static com.loomboom.contants.PathConstants.REGISTRATION;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +18,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.filter.CorsFilter;
+
 import com.loomboom.filters.JwtFilter;
 import lombok.RequiredArgsConstructor;
 
@@ -40,9 +48,10 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
-        security.csrf(csrf -> csrf.disable()).authorizeHttpRequests(
-                auth -> auth.requestMatchers(LOG_IN,REGISTRATION)
-                        .permitAll().anyRequest().authenticated())
+        security.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable()).authorizeHttpRequests(
+                auth -> auth.requestMatchers("/**")
+                        .permitAll().requestMatchers("/user/**").hasAnyRole("USER").requestMatchers("/admin/**")
+                        .hasAnyRole("ADMIN").anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtException))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         security.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -50,4 +59,14 @@ public class SecurityConfig {
 
     }
 
+    @Bean
+    CorsFilter corsFilter() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedHeader("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/api/**", corsConfiguration);
+        return new CorsFilter(source);
+    }
 }

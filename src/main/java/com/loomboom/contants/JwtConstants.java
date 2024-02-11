@@ -9,4 +9,6 @@ public class JwtConstants {
 
     public static final String JWT_SECRET = "LoomBoomBrijeshAuthorization123456";
 
+    public static final String JWT_AUTHORITIES = "roles";
+
 }

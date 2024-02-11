@@ -20,7 +20,7 @@ public class AuthController {
     private final AuthenticationMapper authenticationMapper;
 
     @PostMapping(LOG_IN)
-    public ResponseEntity<JwtResponse> logIn(@RequestBody JwtRequest jwtRequest) {
+    public ResponseEntity<JwtResponse> logIn(@RequestBody @Valid JwtRequest jwtRequest) {
         JwtResponse jwtResponse = authenticationMapper.logIn(jwtRequest);
         return ResponseEntity.ok(jwtResponse);
     }

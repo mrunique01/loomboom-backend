@@ -1,4 +1,4 @@
-package com.loomboom.validations.annotations;
+package com.loomboom.utils.validations.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -6,7 +6,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.loomboom.validations.validator.CheckDuplicateValidator;
+import com.loomboom.utils.validations.validator.CheckDuplicateValidator;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

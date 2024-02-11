@@ -35,7 +35,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             authenticationManager.authenticate(authentication);
             return true;
         } catch (BadCredentialsException e) {
-            System.out.println(e.getMessage() + "here420");
             throw new ApiRequestException(INVALID_EMAIL_PASSWORD, HttpStatus.UNAUTHORIZED);
         }
     }
