@@ -29,6 +29,7 @@ import com.loomboom.dto.product.ProductsImageResponse;
 import com.loomboom.dto.product.ProductsResponse;
 import com.loomboom.exceptions.ApiRequestException;
 import com.loomboom.mapper.ProductMapper;
+import com.loomboom.model.ProductImage;
 import com.loomboom.service.FileUploadService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -82,24 +83,36 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(GET_PRODUCT_IMAGE)
-    public ResponseEntity<ProductsImageResponse> getProductImage(@PathVariable String imageName,
+    @GetMapping(value = GET_PRODUCT_IMAGE, produces = MediaType.IMAGE_JPEG_VALUE)
+    public void getProductImage(@PathVariable String imageName,
             HttpServletResponse response) {
         InputStream resource;
         try {
             resource = fileUploadService.getResourse(PRODUCT_IMAGES, imageName);
 
-            byte[] imageByte = StreamUtils.copyToByteArray(resource);
+            response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 
-            String base64Image = Base64.getEncoder().encodeToString(imageByte);
+            StreamUtils.copy(resource, response.getOutputStream());
 
-            return ResponseEntity.ok(new ProductsImageResponse(base64Image));
         } catch (FileNotFoundException e) {
             throw new ApiRequestException(FILE_NOT_FOUND, HttpStatus.BAD_REQUEST);
         } catch (IOException e) {
             throw new ApiRequestException(SOMETHING_WENT_WRONG, HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @PostMapping(ADD_PRODUCT_IMAGE)
+    public ResponseEntity<ProductsImageResponse> addProductImage(@PathVariable Long productId,
+            @RequestPart(name = "productImage") MultipartFile image) {
+        ProductsImageResponse productImage = productMapper.addProductImage(productId, image);
+        return ResponseEntity.ok(productImage);
+    }
+
+    @DeleteMapping(DELETE_PRODUCT_IMAGE)
+    public ResponseEntity<ApiResponse> addProductImage(@PathVariable Long imageId) {
+        ApiResponse productImage = productMapper.deleteImage(imageId);
+        return ResponseEntity.ok(productImage);
     }
 
 }

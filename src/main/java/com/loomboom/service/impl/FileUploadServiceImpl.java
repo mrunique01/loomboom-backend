@@ -1,5 +1,7 @@
 package com.loomboom.service.impl;
 
+import static com.loomboom.contants.ErrorMessage.SOMETHING_WENT_WRONG;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,9 +12,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.loomboom.exceptions.ApiRequestException;
 import com.loomboom.service.FileUploadService;
 
 import lombok.RequiredArgsConstructor;
@@ -52,6 +58,19 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         String filePath = path + File.separator + fileName;
         return new FileInputStream(filePath);
+    }
+
+    @Override
+    public Boolean deleteResourse(String uploadDir, String fileName) {
+        Path path = Paths.get(uploadDir).resolve(fileName);
+        try {
+            Files.delete(path);
+            return true;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            throw new ApiRequestException(SOMETHING_WENT_WRONG, HttpStatus.BAD_REQUEST);
+        }
+        // return false;
     }
 
 }

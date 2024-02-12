@@ -1,5 +1,10 @@
 package com.loomboom.dto.product;
 
+import java.util.List;
+
+import com.loomboom.model.Category;
+import com.loomboom.model.ProductImage;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,9 +20,13 @@ public class ProductResponse {
 
     private String price;
 
-    private String category;
+    private Category category;
+
+    private List<ProductImage> productImages;
 
     private String thumbnail;
 
     private Integer active;
+
+    private Float rating;
 }

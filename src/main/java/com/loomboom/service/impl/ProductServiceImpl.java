@@ -3,6 +3,8 @@ package com.loomboom.service.impl;
 import com.loomboom.exceptions.ApiRequestException;
 import com.loomboom.model.Category;
 import com.loomboom.model.Product;
+import com.loomboom.model.ProductImage;
+import com.loomboom.repository.ProductImageRepository;
 import com.loomboom.repository.ProductRepository;
 import com.loomboom.service.CategoryService;
 import com.loomboom.service.FileUploadService;
@@ -11,6 +13,10 @@ import lombok.RequiredArgsConstructor;
 import static com.loomboom.utils.StringUtils.*;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static com.loomboom.contants.ErrorMessage.*;
 import static com.loomboom.contants.FileDirectoryConst.PRODUCT_IMAGES;
 
@@ -25,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
     private final FileUploadService fileUploadService;
 
     @Override
@@ -53,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
             throw new ApiRequestException(ERROR_ON_UPLOAD, HttpStatus.BAD_REQUEST);
 
         }
-System.out.println(product.toString()+"jhgf");
+        System.out.println(product.toString() + "jhgf");
         if (product.getCategory() == null) {
             throw new ApiRequestException(INVALID_CATEGORY, HttpStatus.BAD_REQUEST);
         }
@@ -126,6 +133,43 @@ System.out.println(product.toString()+"jhgf");
             return productRepository.findById(id).orElse(null);
         }
         return null;
+    }
+
+    @Override
+    public ProductImage addProductImage(Long id, MultipartFile thumbnail) {
+        if (thumbnail.isEmpty()) {
+            throw new ApiRequestException(EMPTY_FILE, HttpStatus.BAD_REQUEST);
+        }
+
+        // Check if the file is a JPG image
+        if (!thumbnail.getContentType().equals("image/jpeg")) {
+            throw new ApiRequestException(ONLY_JPG_IMAGES, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            String fileName = fileUploadService.uploadResourse(thumbnail, PRODUCT_IMAGES);
+            ProductImage productImage = new ProductImage();
+            productImage.setFileName(fileName);
+            productImage.setProduct(findById(id));
+            productImageRepository.save(productImage);
+            return productImage;
+        } catch (IOException e) {
+            throw new ApiRequestException(ERROR_ON_UPLOAD, HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
+    @Override
+    public Boolean deleteProductImageById(Long id) {
+        System.out.println(id+" fdsfds");
+        ProductImage productImage = productImageRepository.findById(id).orElse(null);
+        if (productImage == null) {
+            throw new ApiRequestException(FILE_NOT_EXISTS, HttpStatus.BAD_REQUEST);
+        }
+        fileUploadService.deleteResourse(PRODUCT_IMAGES, productImage.getFileName());
+        productImageRepository.deleteById(id);
+        return true;
     }
 
 }

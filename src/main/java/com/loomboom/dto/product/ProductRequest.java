@@ -37,4 +37,7 @@ public class ProductRequest {
     @NotNull(message = REQUIRED_FIELD)
     private Integer active;
 
+    @NotNull(message = REQUIRED_FIELD)
+    private Float rating;
+
 }

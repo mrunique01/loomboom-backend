@@ -10,4 +10,6 @@ public interface FileUploadService {
     String uploadResourse(MultipartFile file, String uploadDir) throws IOException;
 
     InputStream getResourse(String path, String fileName) throws FileNotFoundException;
+
+    Boolean deleteResourse(String uploadDir,String fileName);
 }

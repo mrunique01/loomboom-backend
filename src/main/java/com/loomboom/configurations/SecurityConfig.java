@@ -49,9 +49,11 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
         security.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable()).authorizeHttpRequests(
-                auth -> auth.requestMatchers("/**")
-                        .permitAll().requestMatchers("/user/**").hasAnyRole("USER").requestMatchers("/admin/**")
-                        .hasAnyRole("ADMIN").anyRequest().authenticated())
+                auth -> auth.requestMatchers("/**").permitAll()
+                        .requestMatchers("/user/**").hasAnyRole("USER")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/assets/images/**").permitAll()
+                        .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtException))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         security.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -67,6 +69,7 @@ public class SecurityConfig {
         corsConfiguration.addAllowedHeader("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", corsConfiguration);
+        source.registerCorsConfiguration("/assets/images/**", corsConfiguration);
         return new CorsFilter(source);
     }
 }

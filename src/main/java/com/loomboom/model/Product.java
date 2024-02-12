@@ -2,6 +2,9 @@ package com.loomboom.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,8 +24,7 @@ import lombok.ToString;
 @Table(name = "products")
 @Getter
 @Setter
-@ToString
-public class Product extends Pagination {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,10 +32,13 @@ public class Product extends Pagination {
     private String title;
     private String description;
     private Double price;
+    private Float rating;
     private String thumbnail;
     private Integer active;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
+    private List<ProductImage> productImages;
 }

@@ -7,16 +7,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.loomboom.model.Product;
+import com.loomboom.model.ProductImage;
 
 public interface ProductService {
 
     Page<Product> getAllProducts(Pageable pageable);
 
-    Product createProduct(Product product,MultipartFile thumbnail);
+    Product createProduct(Product product, MultipartFile thumbnail);
 
-    Product updateProduct(Product product, Long id,MultipartFile thumbnail);
+    Product updateProduct(Product product, Long id, MultipartFile thumbnail);
+
+    ProductImage addProductImage(Long id, MultipartFile thumbnail);
 
     Boolean deleteProductById(Long id);
+
+    Boolean deleteProductImageById(Long id);
 
     Product findByTitle(String title);
 

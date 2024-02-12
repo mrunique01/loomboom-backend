@@ -11,8 +11,11 @@ import com.loomboom.dto.api.ApiResponse;
 import com.loomboom.dto.pagination.PaginationReponse;
 import com.loomboom.dto.product.ProductRequest;
 import com.loomboom.dto.product.ProductResponse;
+import com.loomboom.dto.product.ProductsImageResponse;
 import com.loomboom.dto.product.ProductsResponse;
 import com.loomboom.model.Product;
+import com.loomboom.model.ProductImage;
+
 import static com.loomboom.contants.SuccessMessage.*;
 
 import com.loomboom.service.CategoryService;
@@ -31,6 +34,7 @@ public class ProductMapper {
     public ProductResponse createProduct(ProductRequest productRequest, MultipartFile thumbnail) {
         Product product = commonMapper.mapObject(productRequest, Product.class);
         product.setCategory(categoryService.findById(productRequest.getCategory()));
+
         return commonMapper.mapObject(productService.createProduct(product, thumbnail), ProductResponse.class);
     }
 
@@ -54,8 +58,17 @@ public class ProductMapper {
         return commonMapper.mapObject(productService.updateProduct(product, id, thumbnail), ProductResponse.class);
     }
 
+    public ProductsImageResponse addProductImage(Long id, MultipartFile thumbnail) {
+        return commonMapper.mapObject(productService.addProductImage(id, thumbnail), ProductsImageResponse.class);
+    }
+
+    public ApiResponse deleteImage(Long id) {
+        productService.deleteProductImageById(id);
+        return new ApiResponse(true, PRODUCT_DELETED);
+    }
+
     public ApiResponse deleteProduct(Long id) {
         productService.deleteProductById(id);
-        return new ApiResponse(true, PRODUCT_DELETED);
+        return new ApiResponse(true, IMAGE_DELETED);
     }
 }

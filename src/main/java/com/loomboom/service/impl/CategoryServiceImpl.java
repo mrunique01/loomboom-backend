@@ -74,6 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findById(Long id) {
+        System.out.println(id+" fksjdhfkj");
         if (!empty(id)) {
             return categoryRepository.findById(id).orElse(null);
         }
