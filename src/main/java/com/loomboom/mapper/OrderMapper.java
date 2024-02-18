@@ -19,6 +19,7 @@ import com.loomboom.model.Order;
 import com.loomboom.model.OrderItem;
 import com.loomboom.model.ShippingDetail;
 import com.loomboom.model.User;
+import com.loomboom.model.UserAddress;
 
 import static com.loomboom.contants.ErrorMessage.USER_NOT_EXISTS;
 import static com.loomboom.contants.SuccessMessage.*;
@@ -27,6 +28,7 @@ import com.loomboom.service.OrderItemService;
 import com.loomboom.service.OrderService;
 import com.loomboom.service.ProductService;
 import com.loomboom.service.ShippingDetailService;
+import com.loomboom.service.UserAddressService;
 import com.loomboom.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -38,6 +40,7 @@ public class OrderMapper {
     private final OrderService orderService;
     private final ProductService productService;
     private final ShippingDetailService shippingDetailService;
+    private final UserAddressService userAddressService;
     private final OrderItemService orderItemService;
     private final UserService userService;
     private final CommonMapper commonMapper;
@@ -53,12 +56,16 @@ public class OrderMapper {
         Order order = commonMapper.mapObject(orderRequest, Order.class);
         shippingDetail.setUsers(user);
         order.setUser(user);
+        UserAddress userAddress = commonMapper.mapObject(shippingDetail, UserAddress.class);
         shippingDetail = shippingDetailService.createShippingDetail(shippingDetail);
+        userAddressService.createUserAddress(userAddress);
         order.setShippingDetails(shippingDetail);
         order.setOrderItems(null);
         order.setOrderDate(new Date());
         order.setStatus("pending");
         Order finalOrder = orderService.createOrder(order);
+        shippingDetail.setOrder(finalOrder);
+        shippingDetail = shippingDetailService.createShippingDetail(shippingDetail);
         List<OrderItem> orderItems = orderRequest.getOrderItems().stream().map((orderItemRequest) -> {
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(finalOrder);

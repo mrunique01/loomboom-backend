@@ -35,4 +35,5 @@ public class ShippingDetailRequest {
     private boolean isDefault;
     @NotBlank(message = REQUIRED_FIELD)
     private String zip;
+    
 }

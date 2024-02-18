@@ -39,7 +39,7 @@ public class ShippingDetailServiceImpl implements ShippingDetailService {
     @Override
     public ShippingDetail updateShippingDetail(ShippingDetail shippingDetail, Long id) {
         if (findById(id) == null) {
-            throw new ApiRequestException(NOT_EXISTS, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(ADSRESS_EXISTS, HttpStatus.BAD_REQUEST);
         }
 
         shippingDetail.setId(id);
@@ -50,7 +50,7 @@ public class ShippingDetailServiceImpl implements ShippingDetailService {
     public Boolean deleteShippingDetailById(Long id) {
         ShippingDetail shippingDetail = findById(id);
         if (shippingDetail == null) {
-            throw new ApiRequestException(NOT_EXISTS, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(ADSRESS_EXISTS, HttpStatus.BAD_REQUEST);
         }
         shippingDetailRepository.deleteById(id);
         return true;

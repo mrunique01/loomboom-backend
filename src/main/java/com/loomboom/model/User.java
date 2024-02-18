@@ -51,9 +51,10 @@ public class User implements UserDetails {
                                         @JoinColumn(name = "role_id", referencedColumnName = "id")
                         })
         private List<Role> roles;
+
         @JsonManagedReference
         @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-        private List<ShippingDetail> shippingDetail;
+        private List<UserAddress> userAddresses;
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {

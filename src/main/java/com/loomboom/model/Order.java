@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +43,7 @@ public class Order implements Serializable {
     @Column(columnDefinition = "varchar(255) default 'pending'")
     private String status;
     private String paymentMethod;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "addess_id")
     private ShippingDetail shippingDetails;
     @JsonManagedReference

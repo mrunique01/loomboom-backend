@@ -39,11 +39,18 @@ public class PathConstants {
     public static final String UPDATE_ORDER = ORDER + "/update/{orderId}";
     public static final String DELETE_ORDER = ORDER + "/delete/{orderId}";
 
-    public static final String SHIPPING_DETAIL = API + "/order";
+    public static final String SHIPPING_DETAIL = API + "/shipping-details";
     public static final String ALL_SHIPPING_DETAILS = SHIPPING_DETAIL + "/all";
     public static final String ALL_SHIPPING_DETAILS_BY_PAGE = SHIPPING_DETAIL + "/page";
     public static final String CREATE_SHIPPING_DETAIL = SHIPPING_DETAIL + "/create";
-    public static final String SHIPPING_DETAIL_BY_ID = SHIPPING_DETAIL + "/{orderId}";
-    public static final String UPDATE_SHIPPING_DETAIL = SHIPPING_DETAIL + "/update/{orderId}";
-    public static final String DELETE_SHIPPING_DETAIL = ORDER + "/delete/{orderId}";
+    public static final String SHIPPING_DETAIL_BY_ID = SHIPPING_DETAIL + "/{shippingDetailId}";
+    public static final String UPDATE_SHIPPING_DETAIL = SHIPPING_DETAIL + "/update/{shippingDetailId}";
+    public static final String DELETE_SHIPPING_DETAIL = SHIPPING_DETAIL + "/delete/{shippingDetailId}";
+
+    public static final String USER_ADDRESS = USER_BY_ID + "/user-address";
+    public static final String ALL_USER_ADDRESS = USER_ADDRESS + "/all";
+    public static final String CREATE_USER_ADDRESS = USER_ADDRESS + "/create";
+    public static final String USER_ADDRESS_BY_ID = USER_ADDRESS + "/{userAddressId}";
+    public static final String UPDATE_USER_ADDRESS = USER_ADDRESS + "/update/{userAddressId}";
+    public static final String DELETE_USER_ADDRESS = USER_ADDRESS + "/delete/{userAddressId}";
 }

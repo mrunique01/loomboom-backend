@@ -2,7 +2,7 @@ package com.loomboom.dto.user;
 
 import java.util.List;
 
-import com.loomboom.model.ShippingDetail;
+import com.loomboom.model.UserAddress;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,5 +17,4 @@ public class UserResponse {
     private String email;
     private String phone;
     private String profilePhoto;
-    private List<ShippingDetail> shippingDetail;
 }
