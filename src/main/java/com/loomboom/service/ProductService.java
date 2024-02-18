@@ -25,5 +25,7 @@ public interface ProductService {
 
     Product findByTitle(String title);
 
+    List<Product> findByIds(List<Long> ids);
+
     Product findById(Long id);
 }

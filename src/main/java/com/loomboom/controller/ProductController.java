@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.loomboom.contants.ErrorMessage.FILE_NOT_FOUND;
+import static com.loomboom.contants.ErrorMessage.REQUIRED_FIELD;
 import static com.loomboom.contants.ErrorMessage.SOMETHING_WENT_WRONG;
 import static com.loomboom.contants.FileDirectoryConst.PRODUCT_IMAGES;
 import static com.loomboom.contants.PathConstants.*;
@@ -34,11 +35,13 @@ import com.loomboom.service.FileUploadService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 
 @RestController
@@ -59,6 +62,13 @@ public class ProductController {
     public ResponseEntity<ProductResponse> getProductById(@PathVariable Long productId) {
         ProductResponse product = productMapper.findProductById(productId);
         return ResponseEntity.ok(product);
+    }
+
+    @GetMapping(PRODUCT)
+    public ResponseEntity<List<ProductResponse>> getProductById(
+            @RequestParam @NotEmpty(message = REQUIRED_FIELD) List<Long> productIds) {
+        List<ProductResponse> products = productMapper.findProductByIds(productIds);
+        return ResponseEntity.ok(products);
     }
 
     @PostMapping(CREATE_PRODUCT)

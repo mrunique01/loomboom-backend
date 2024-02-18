@@ -1,5 +1,6 @@
 package com.loomboom.model;
 
+import java.io.Serializable;
 import java.util.List;
 import com.loomboom.enums.RoleEnum;
 
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Table(name = "roles")
 @Getter
 @Setter
-public class Role {
+public class Role implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -25,5 +25,7 @@ public class ErrorMessage {
     public static final String ONLY_JPG_IMAGES = "Only JPG images are allowed";
     public static final String EMPTY_CATEGORY_NAME = "Category name cannot be empty";
     public static final String INVALID_CATEGORY = "Invalid Category";
+    public static final String MIN_ONE_ITEM = "At least one order item is required";
+    public static final String MAX_500_CHAR =  "Additional note must be at most 500 characters";
 
 }

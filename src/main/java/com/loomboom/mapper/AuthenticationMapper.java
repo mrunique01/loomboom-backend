@@ -28,6 +28,7 @@ public class AuthenticationMapper {
         User user = userService.findByEmail(userDetails.getUsername());
         String token = jwtHelper.createToken(user);
         JwtResponse jwtResponse = new JwtResponse();
+        jwtResponse.setId(user.getId());
         jwtResponse.setEmail(userDetails.getUsername());
         jwtResponse.setToken(token);
         return jwtResponse;
@@ -38,6 +39,7 @@ public class AuthenticationMapper {
         user = authenticationService.signup(user);
         String token = jwtHelper.createToken(user);
         JwtResponse jwtResponse = new JwtResponse();
+        jwtResponse.setId(user.getId());
         jwtResponse.setEmail(user.getEmail());
         jwtResponse.setToken(token);
         return jwtResponse;

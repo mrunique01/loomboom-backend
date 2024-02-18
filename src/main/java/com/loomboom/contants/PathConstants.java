@@ -7,6 +7,7 @@ public class PathConstants {
     public static final String AUTH = API + "/auth";
     public static final String PRODUCT = API + "/product";
     public static final String ALL_PRODUCTS = PRODUCT + "/all";
+    // public static final String ALL_PRODUCTS = PRODUCT + "/all";
     public static final String CREATE_PRODUCT = PRODUCT + "/create";
     public static final String PRODUCT_BY_ID = PRODUCT + "/{productId}";
     public static final String UPDATE_PRODUCT = PRODUCT + "/update/{productId}";
@@ -20,6 +21,7 @@ public class PathConstants {
     public static final String USER_BY_ID = USER + "/{userId}";
     public static final String UPDATE_USER = USER + "/update/{userId}";
     public static final String DELETE_USER = USER + "/delete/{userId}";
+    public static final String GET_USER_IMAGE = USER + "/image/{imageName}";
 
     public static final String CATEGORY = API + "/category";
     public static final String ALL_CATEGORIES = CATEGORY + "/all";
@@ -28,4 +30,20 @@ public class PathConstants {
     public static final String CATEGORY_BY_ID = CATEGORY + "/{categoryId}";
     public static final String UPDATE_CATEGORY = CATEGORY + "/update/{categoryId}";
     public static final String DELETE_CATEGORY = CATEGORY + "/delete/{categoryId}";
+
+    public static final String ORDER = API + "/order";
+    public static final String ALL_ORDERS = ORDER + "/all";
+    public static final String ALL_ORDERS_BY_PAGE = ORDER + "/page";
+    public static final String CREATE_ORDER = ORDER + "/create";
+    public static final String ORDER_BY_ID = ORDER + "/{orderId}";
+    public static final String UPDATE_ORDER = ORDER + "/update/{orderId}";
+    public static final String DELETE_ORDER = ORDER + "/delete/{orderId}";
+
+    public static final String SHIPPING_DETAIL = API + "/order";
+    public static final String ALL_SHIPPING_DETAILS = SHIPPING_DETAIL + "/all";
+    public static final String ALL_SHIPPING_DETAILS_BY_PAGE = SHIPPING_DETAIL + "/page";
+    public static final String CREATE_SHIPPING_DETAIL = SHIPPING_DETAIL + "/create";
+    public static final String SHIPPING_DETAIL_BY_ID = SHIPPING_DETAIL + "/{orderId}";
+    public static final String UPDATE_SHIPPING_DETAIL = SHIPPING_DETAIL + "/update/{orderId}";
+    public static final String DELETE_SHIPPING_DETAIL = ORDER + "/delete/{orderId}";
 }

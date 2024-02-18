@@ -2,6 +2,8 @@ package com.loomboom.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.loomboom.model.User;
 
 /**
@@ -15,7 +17,7 @@ public interface UserService {
 
     User findByEmail(String email);
 
-    User updateUser(User user, Long id);
+    User updateUser(User user, Long id, MultipartFile profilePhoto);
 
     Boolean deleteUserById(Long id);
 

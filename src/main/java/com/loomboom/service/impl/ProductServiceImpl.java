@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static com.loomboom.contants.ErrorMessage.*;
 import static com.loomboom.contants.FileDirectoryConst.PRODUCT_IMAGES;
@@ -162,7 +163,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean deleteProductImageById(Long id) {
-        System.out.println(id+" fdsfds");
+        System.out.println(id + " fdsfds");
         ProductImage productImage = productImageRepository.findById(id).orElse(null);
         if (productImage == null) {
             throw new ApiRequestException(FILE_NOT_EXISTS, HttpStatus.BAD_REQUEST);
@@ -170,6 +171,14 @@ public class ProductServiceImpl implements ProductService {
         fileUploadService.deleteResourse(PRODUCT_IMAGES, productImage.getFileName());
         productImageRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public List<Product> findByIds(List<Long> ids) {
+        if (!empty(ids)) {
+            return productRepository.findAllById(ids);
+        }
+        return null;
     }
 
 }

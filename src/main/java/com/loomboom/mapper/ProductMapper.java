@@ -52,6 +52,11 @@ public class ProductMapper {
         return commonMapper.mapObject(productService.findById(id), ProductResponse.class);
     }
 
+    public List<ProductResponse> findProductByIds(List<Long> ids) {
+        return commonMapper.mapListObject(productService.findByIds(ids), ProductResponse.class);
+
+    }
+
     public ProductResponse updateProduct(Long id, ProductRequest productRequest, MultipartFile thumbnail) {
         Product product = commonMapper.mapObject(productRequest, Product.class);
         product.setCategory(categoryService.findById(productRequest.getCategory()));

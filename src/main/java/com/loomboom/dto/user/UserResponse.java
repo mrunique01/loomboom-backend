@@ -1,5 +1,9 @@
 package com.loomboom.dto.user;
 
+import java.util.List;
+
+import com.loomboom.model.ShippingDetail;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +15,7 @@ public class UserResponse {
     private String lastName;
     private String gender;
     private String email;
-    private String password;
     private String phone;
+    private String profilePhoto;
+    private List<ShippingDetail> shippingDetail;
 }
