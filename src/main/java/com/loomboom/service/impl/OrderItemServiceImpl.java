@@ -39,7 +39,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public OrderItem updateOrderItem(OrderItem orderItem, Long id) {
         if (findById(id) == null) {
-            throw new ApiRequestException(NOT_EXISTS, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(ORDER_ITEM_NOT_EXISTS, HttpStatus.BAD_REQUEST);
         }
 
         orderItem.setId(id);
@@ -50,7 +50,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     public Boolean deleteOrderItemById(Long id) {
         OrderItem orderItem = findById(id);
         if (orderItem == null) {
-            throw new ApiRequestException(NOT_EXISTS, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(ORDER_ITEM_NOT_EXISTS, HttpStatus.BAD_REQUEST);
         }
         orderItemRepository.deleteById(id);
         return true;

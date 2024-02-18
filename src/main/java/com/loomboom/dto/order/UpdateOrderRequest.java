@@ -13,7 +13,6 @@ import static com.loomboom.contants.ErrorMessage.MAX_500_CHAR;
 import static com.loomboom.contants.ErrorMessage.MIN_ONE_ITEM;
 import static com.loomboom.contants.ErrorMessage.REQUIRED_FIELD;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
@@ -23,7 +22,10 @@ import com.loomboom.dto.shipping.ShippingDetailRequest;
 @Getter
 @Setter
 @ToString
-public class OrderRequest {
+public class UpdateOrderRequest {
+
+    @NotNull(message = REQUIRED_FIELD)
+    private Long id;
 
     @NotNull(message = REQUIRED_FIELD)
     private Double totalAmount;
@@ -37,10 +39,6 @@ public class OrderRequest {
     private Double subTotal;
     @NotEmpty(message = REQUIRED_FIELD)
     private String paymentMethod;
-    
-    private String status;
-    
-    private Date orderDate;
 
     @NotNull(message = REQUIRED_FIELD)
     private Long userId;
@@ -50,7 +48,7 @@ public class OrderRequest {
 
     @NotEmpty(message = REQUIRED_FIELD)
     @Size(min = 1, message = MIN_ONE_ITEM)
-    private List<@Valid OrderItemRequest> orderItems;
+    private List<@Valid UpdateOrderItemRequest> orderItems;
 
     @Length(max = 500, message = MAX_500_CHAR)
     private String additionalNote;

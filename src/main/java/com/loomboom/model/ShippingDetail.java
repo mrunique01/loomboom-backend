@@ -3,6 +3,8 @@ package com.loomboom.model;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +23,7 @@ import lombok.Setter;
 @Table(name = "shipping_details")
 @Getter
 @Setter
-public class ShippingDetail {
+public class ShippingDetail implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,12 +38,16 @@ public class ShippingDetail {
     private String country;
     private boolean isDefault;
     private String zip;
+
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("shippingDetails")    
     private User users;
+
+
     @JsonBackReference
-    @OneToOne
+    @OneToOne(mappedBy = "shippingDetails")
     @JoinColumn(name = "order_id")
     private Order order;
 }

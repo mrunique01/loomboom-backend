@@ -43,6 +43,7 @@ public class User implements UserDetails {
         private String password;
         private String phone;
         private String profilePhoto;
+        @JsonManagedReference
         @OneToMany(mappedBy = "user")
         private List<Order> orders;
         @ManyToMany(fetch = FetchType.EAGER)
@@ -55,6 +56,10 @@ public class User implements UserDetails {
         @JsonManagedReference
         @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
         private List<UserAddress> userAddresses;
+
+        @JsonManagedReference
+        @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+        private List<ShippingDetail> shippingDetails;
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -32,8 +33,10 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
     private Double totalAmount;
     private Double shippingAmount;
@@ -43,6 +46,8 @@ public class Order implements Serializable {
     @Column(columnDefinition = "varchar(255) default 'pending'")
     private String status;
     private String paymentMethod;
+
+    @JsonManagedReference
     @OneToOne
     @JoinColumn(name = "addess_id")
     private ShippingDetail shippingDetails;

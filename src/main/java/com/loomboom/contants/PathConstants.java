@@ -31,6 +31,22 @@ public class PathConstants {
     public static final String UPDATE_CATEGORY = CATEGORY + "/update/{categoryId}";
     public static final String DELETE_CATEGORY = CATEGORY + "/delete/{categoryId}";
 
+    public static final String CONTACT = API + "/contact";
+    public static final String ALL_CONTACTS = CONTACT + "/all";
+    public static final String ALL_CONTACTS_BY_PAGE = CONTACT + "/page";
+    public static final String CREATE_CONTACT = CONTACT + "/create";
+    public static final String CONTACT_BY_ID = CONTACT + "/{contactId}";
+    public static final String UPDATE_CONTACT = CONTACT + "/update/{contactId}";
+    public static final String DELETE_CONTACT = CONTACT + "/delete/{contactId}";
+
+    public static final String DISCOUNT = API + "/discount";
+    public static final String ALL_DISCOUNTS = DISCOUNT + "/all";
+    public static final String ALL_DISCOUNTS_BY_PAGE = DISCOUNT + "/page";
+    public static final String CREATE_DISCOUNT = DISCOUNT + "/create";
+    public static final String DISCOUNT_BY_ID = DISCOUNT + "/{discountId}";
+    public static final String UPDATE_DISCOUNT = DISCOUNT + "/update/{discountId}";
+    public static final String DELETE_DISCOUNT = DISCOUNT + "/delete/{discountId}";
+
     public static final String ORDER = API + "/order";
     public static final String ALL_ORDERS = ORDER + "/all";
     public static final String ALL_ORDERS_BY_PAGE = ORDER + "/page";

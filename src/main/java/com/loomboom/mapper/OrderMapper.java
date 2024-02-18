@@ -17,10 +17,13 @@ import com.loomboom.dto.order.OrderRequest;
 import com.loomboom.dto.order.OrderResponse;
 import com.loomboom.model.Order;
 import com.loomboom.model.OrderItem;
+import com.loomboom.model.Product;
 import com.loomboom.model.ShippingDetail;
 import com.loomboom.model.User;
 import com.loomboom.model.UserAddress;
 
+import static com.loomboom.contants.ErrorMessage.NOT_EXISTS;
+import static com.loomboom.contants.ErrorMessage.ORDER_ITEM_NOT_EXISTS;
 import static com.loomboom.contants.ErrorMessage.USER_NOT_EXISTS;
 import static com.loomboom.contants.SuccessMessage.*;
 
@@ -62,15 +65,19 @@ public class OrderMapper {
         order.setShippingDetails(shippingDetail);
         order.setOrderItems(null);
         order.setOrderDate(new Date());
-        order.setStatus("pending");
+        order.setStatus("Pending");
         Order finalOrder = orderService.createOrder(order);
         shippingDetail.setOrder(finalOrder);
         shippingDetail = shippingDetailService.createShippingDetail(shippingDetail);
         List<OrderItem> orderItems = orderRequest.getOrderItems().stream().map((orderItemRequest) -> {
+            Product product = productService.findById(orderItemRequest.getProductId());
+            if (product == null) {
+                throw new ApiRequestException(NOT_EXISTS, HttpStatus.BAD_REQUEST);
+            }
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(finalOrder);
             orderItem.setPrice(orderItemRequest.getPrice());
-            orderItem.setProduct(productService.findById(orderItemRequest.getProductId()));
+            orderItem.setProduct(product);
             orderItem.setQuantity(orderItemRequest.getQuantity());
             return orderItem;
         }).collect(Collectors.toList());
@@ -105,8 +112,45 @@ public class OrderMapper {
     }
 
     public OrderResponse updateOrder(Long id, OrderRequest orderRequest) {
+        User user = userService.getUserById(orderRequest.getUserId());
+        if (user == null) {
+            throw new ApiRequestException(USER_NOT_EXISTS, HttpStatus.BAD_REQUEST);
+        }
+        ShippingDetail shippingDetail = commonMapper.mapObject(orderRequest.getShippingDetails(), ShippingDetail.class);
+        orderRequest.setShippingDetails(null);
         Order order = commonMapper.mapObject(orderRequest, Order.class);
-        return commonMapper.mapObject(orderService.updateOrder(order, id), OrderResponse.class);
+        shippingDetail.setUsers(user);
+        order.setUser(user);
+        shippingDetail = shippingDetailService.updateShippingDetail(shippingDetail, shippingDetail.getId());
+        order.setShippingDetails(shippingDetail);
+        order.setOrderItems(null);
+        order.setUpdateDate(new Date());
+        Order finalOrder = orderService.updateOrder(order, id);
+        shippingDetail.setOrder(finalOrder);
+        shippingDetail = shippingDetailService.createShippingDetail(shippingDetail);
+        List<OrderItem> orderItems = orderRequest.getOrderItems().stream().map((orderItemRequest) -> {
+            Product product = productService.findById(orderItemRequest.getProductId());
+            if (product == null) {
+                throw new ApiRequestException(NOT_EXISTS, HttpStatus.BAD_REQUEST);
+            }
+            OrderItem orderItemData = orderItemService.findById(orderItemRequest.getId());
+            if (orderItemData == null) {
+                throw new ApiRequestException(ORDER_ITEM_NOT_EXISTS, HttpStatus.BAD_REQUEST);
+            }
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(finalOrder);
+            orderItem.setPrice(orderItemRequest.getPrice());
+            orderItem.setProduct(product);
+            orderItem.setQuantity(orderItemRequest.getQuantity());
+            orderItem.setId(orderItemData.getId());
+            return orderItem;
+        }).collect(Collectors.toList());
+        orderItemService.createOrderItems(orderItems);
+        OrderResponse orderResponse = commonMapper.mapObject(order, OrderResponse.class);
+        orderResponse.setOrderItems(orderItems);
+        orderResponse.setShippingDetails(shippingDetail);
+        return orderResponse;
+
     }
 
     public ApiResponse deleteOrder(Long id) {

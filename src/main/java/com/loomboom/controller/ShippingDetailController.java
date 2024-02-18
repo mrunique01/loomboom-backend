@@ -11,6 +11,7 @@ import com.loomboom.dto.api.ApiResponse;
 import com.loomboom.dto.shipping.ShippingDetailRequest;
 import com.loomboom.dto.shipping.ShippingDetailResponse;
 import com.loomboom.dto.shipping.ShippingDetailsResponse;
+import com.loomboom.dto.shipping.UpdateShippingDetailRequest;
 import com.loomboom.mapper.ShippingDetailMapper;
 
 import jakarta.validation.Valid;
@@ -53,10 +54,10 @@ public class ShippingDetailController {
 
     @PutMapping(UPDATE_SHIPPING_DETAIL)
     public ResponseEntity<ShippingDetailResponse> updateShippingDetail(@PathVariable Long shippingDetailId,
-            @RequestBody @Valid ShippingDetailRequest shippingDetailRequest) {
+            @RequestBody @Valid UpdateShippingDetailRequest updateShippingDetailRequest) {
 
         ShippingDetailResponse shippingDetail = shippingDetailMapper.updateShippingDetail(shippingDetailId,
-                shippingDetailRequest);
+                updateShippingDetailRequest);
         return ResponseEntity.ok(shippingDetail);
     }
 

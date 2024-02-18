@@ -1,5 +1,8 @@
 package com.loomboom.dto.shipping;
 
+import com.loomboom.model.Order;
+import com.loomboom.model.User;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,4 +32,8 @@ public class ShippingDetailResponse {
     private boolean isDefault;
 
     private String zip;
+
+    private Order order;
+
+    private User users;
 }

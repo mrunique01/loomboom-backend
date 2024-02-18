@@ -5,6 +5,7 @@ public class ErrorMessage {
     public static final String REQUIRED_FIELD = "Required";
     public static final String DUPLICATE_VALUE = "Product Already Exists";
     public static final String NOT_EXISTS = "Product Not Exists";
+    public static final String ORDER_ITEM_NOT_EXISTS = "Order Item Not Exists";
     public static final String ADSRESS_EXISTS = "Adress Not Exists";
     public static final String FILE_NOT_EXISTS = "File Not Exists";
     public static final String USER_EXISTS = "User Already Exists";
