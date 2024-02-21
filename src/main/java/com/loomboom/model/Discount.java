@@ -30,7 +30,7 @@ public class Discount implements Serializable {
     @Column(name = "couponCode", unique = true)
     private String title;
     private String type;
-    private Double value;
+    private Integer value;
     private Date expireAt;
     private Boolean active;
 

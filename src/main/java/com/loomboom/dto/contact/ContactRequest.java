@@ -20,15 +20,13 @@ public class ContactRequest {
     private String lastName;
     @NotBlank(message = REQUIRED_FIELD)
     @Length(max = 255)
-    private String gender;
-    @NotBlank(message = REQUIRED_FIELD)
-    @Length(max = 255)
     private String email;
     @NotBlank(message = REQUIRED_FIELD)
     @Length(max = 255)
-    private String message;
+    private String phone;
     @NotBlank(message = REQUIRED_FIELD)
     @Length(max = 255)
-    private String status;
+    private String message;
+
 
 }

@@ -25,9 +25,9 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(NumberFormatException.class)
-    public ResponseEntity<Object> handleInvalidParamType() {
+    public ResponseEntity<Object> handleInvalidParamType(NumberFormatException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ExceptionResponse(false, "Please Enter DATA Valid Format"));
+                .body(new ExceptionResponse(false, ex.getMessage()));
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
