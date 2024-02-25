@@ -51,7 +51,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User signup(User user, String captcha) {
-
         String verifyCaptcha = String.format(reCaptchaUrl, reCaptchaSecret, captcha);
         ReCaptchaResponse reCaptchaResponse = WebClient.create().get().uri(verifyCaptcha).retrieve()
                 .bodyToMono(ReCaptchaResponse.class).block();

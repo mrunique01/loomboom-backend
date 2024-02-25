@@ -43,6 +43,9 @@ public class UserServiceImpl implements UserService {
         if (duplicateUser != null && !(duplicateUser.getId().equals(id))) {
             throw new ApiRequestException(USER_EXISTS, HttpStatus.BAD_REQUEST);
         }
+        if (user.getRoles() == null) {
+            user.setRoles(oldUser.getRoles());
+        }
         user.setId(id);
         user.setPassword(oldUser.getPassword());
         if (profilePhoto == null || profilePhoto.isEmpty()) {

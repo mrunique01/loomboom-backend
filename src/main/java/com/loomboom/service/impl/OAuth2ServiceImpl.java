@@ -19,13 +19,14 @@ import com.loomboom.model.User;
 import com.loomboom.repository.UserRepository;
 import com.loomboom.security.oauth2.OAuth2UserFactory;
 import com.loomboom.security.oauth2.OAuth2UserInfo;
+import com.loomboom.service.OAuth2Service;
 import com.loomboom.service.RoleService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class OAuth2Service extends DefaultOAuth2UserService {
+public class OAuth2ServiceImpl extends DefaultOAuth2UserService  implements OAuth2Service{
 
     private final RoleService roleService;
     private final UserRepository userRepository;
@@ -66,6 +67,10 @@ public class OAuth2Service extends DefaultOAuth2UserService {
         user = userRepository.findById(user.getId()).orElse(null);
         if (user == null) {
             throw new ApiRequestException(USER_EXISTS, HttpStatus.UNAUTHORIZED);
+        }
+        Role role = roleService.findByName(ROLE_USER);
+        if (role == null) {
+            role = roleService.save(ROLE_USER);
         }
         user.setFirstName(oAuth2UserInfo.getFirstName());
         user.setLastName(oAuth2UserInfo.getLastName());

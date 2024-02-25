@@ -64,7 +64,7 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
-    @GetMapping(PRODUCT)
+    @GetMapping(GET_PRODUCT)
     public ResponseEntity<List<ProductResponse>> getProductById(
             @RequestParam @NotEmpty(message = REQUIRED_FIELD) List<Long> productIds) {
         List<ProductResponse> products = productMapper.findProductByIds(productIds);

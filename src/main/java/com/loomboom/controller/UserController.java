@@ -51,7 +51,7 @@ public class UserController {
 
     }
 
-    @PreAuthorize("hasRole('USER')")
+    
     @GetMapping(USER_BY_ID)
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long userId) {
         UserResponse user = userMapper.findUserById(userId);

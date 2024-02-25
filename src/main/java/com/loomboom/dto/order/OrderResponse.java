@@ -2,12 +2,10 @@ package com.loomboom.dto.order;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.sql.Date;
 import java.util.List;
-
-import org.hibernate.annotations.UpdateTimestamp;
-
 import com.loomboom.model.OrderItem;
 import com.loomboom.model.ShippingDetail;
 

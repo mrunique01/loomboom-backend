@@ -42,7 +42,6 @@ public class UserAddressServiceImpl implements UserAddressService {
         if (findById(id) == null) {
             throw new ApiRequestException(ADSRESS_EXISTS, HttpStatus.BAD_REQUEST);
         }
-
         userAddress.setId(id);
         return userAddressRepository.save(userAddress);
     }
@@ -67,8 +66,33 @@ public class UserAddressServiceImpl implements UserAddressService {
     }
 
     @Override
-    public List<UserAddress> findByUsers(User user) {
+    public List<UserAddress> findByUser(User user) {
         return userAddressRepository.findByUsers(user);
+    }
+
+    @Override
+    public Boolean deleteUserAddressByUserId(Long id, Long userId) {
+        UserAddress userAddress = findByIdAndUserId(id, userId);
+        if (userAddress == null) {
+            throw new ApiRequestException(ADSRESS_EXISTS, HttpStatus.BAD_REQUEST);
+        }
+        userAddressRepository.deleteById(id);
+        return true;
+    }
+
+    @Override
+    public UserAddress updateUserAddressByUserId(UserAddress userAddress, Long id, Long userId) {
+        UserAddress oldUserAddress = findByIdAndUserId(id, userId);
+        if (oldUserAddress == null) {
+            throw new ApiRequestException(ADSRESS_EXISTS, HttpStatus.BAD_REQUEST);
+        }
+        userAddress.setId(id);
+        userAddress.setUsers(oldUserAddress.getUsers());
+        return userAddressRepository.save(userAddress);
+    }
+
+    public UserAddress findByIdAndUserId(Long id, Long userId) {
+        return userAddressRepository.findByIdAndUsersId(id, userId).orElse(null);
     }
 
 }

@@ -18,4 +18,8 @@ public interface OrderService {
     Boolean deleteOrderById(Long id);
 
     Order findById(Long id);
+
+    List<Order> findByUserId(Long userId);
+
+    Order findOrderByUserId(Long orderId, Long userId);
 }

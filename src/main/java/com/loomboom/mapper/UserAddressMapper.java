@@ -37,12 +37,17 @@ public class UserAddressMapper {
                 UserAddressResponse.class);
     }
 
-    public List<UserAddressResponse> getAllUserAddress(Long userId) {
+    public List<UserAddressResponse> getAllUserAddress() {
+        return commonMapper.mapListObject(userAddressService.getAllUserAddress(),
+                UserAddressResponse.class);
+    }
+
+    public List<UserAddressResponse> getUserAddressByUserId(Long userId) {
         User user = userService.getUserById(userId);
         if (user == null) {
             throw new ApiRequestException(USER_NOT_EXISTS, HttpStatus.BAD_REQUEST);
         }
-        return commonMapper.mapListObject(userAddressService.findByUsers(user),
+        return commonMapper.mapListObject(userAddressService.findByUser(user),
                 UserAddressResponse.class);
     }
 
@@ -50,19 +55,25 @@ public class UserAddressMapper {
         return commonMapper.mapObject(userAddressService.findById(id), UserAddressResponse.class);
     }
 
-    public UserAddressResponse updateUserAddress(Long id, Long userId, UserAddressRequest userAddressRequest) {
-        User user = userService.getUserById(userId);
-        if (user == null) {
-            throw new ApiRequestException(USER_NOT_EXISTS, HttpStatus.BAD_REQUEST);
-        }
+    public UserAddressResponse updateUserAddress(Long id, UserAddressRequest userAddressRequest) {
         UserAddress userAddress = commonMapper.mapObject(userAddressRequest, UserAddress.class);
-        userAddress.setUsers(user);
         return commonMapper.mapObject(userAddressService.updateUserAddress(userAddress, id),
                 UserAddressResponse.class);
     }
 
     public ApiResponse deleteUserAddress(Long id) {
         userAddressService.deleteUserAddressById(id);
+        return new ApiResponse(true, ADDRESS_DELETED);
+    }
+
+    public UserAddressResponse updateUserAddressByUserId(Long id, Long userId, UserAddressRequest userAddressRequest) {
+        UserAddress userAddress = commonMapper.mapObject(userAddressRequest, UserAddress.class);
+        return commonMapper.mapObject(userAddressService.updateUserAddressByUserId(userAddress, id, userId),
+                UserAddressResponse.class);
+    }
+
+    public ApiResponse deleteUserAddressByUserId(Long id, Long userId) {
+        userAddressService.deleteUserAddressByUserId(id, userId);
         return new ApiResponse(true, ADDRESS_DELETED);
     }
 }

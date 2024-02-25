@@ -8,11 +8,10 @@ import com.loomboom.model.User;
 import com.loomboom.model.UserAddress;
 
 public interface UserAddressService {
-    
+
     List<UserAddress> getAllUserAddress();
 
-    List<UserAddress> findByUsers(User user);
-
+    List<UserAddress> findByUser(User user);
 
     Page<UserAddress> getAllUserAddressByPage(Pageable pageable);
 
@@ -23,4 +22,9 @@ public interface UserAddressService {
     Boolean deleteUserAddressById(Long id);
 
     UserAddress findById(Long id);
+
+    Boolean deleteUserAddressByUserId(Long id, Long userId);
+
+    UserAddress updateUserAddressByUserId(UserAddress userAddress, Long id, Long userId);
+
 }

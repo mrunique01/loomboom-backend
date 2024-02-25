@@ -27,7 +27,7 @@ import org.springframework.web.filter.CorsFilter;
 import com.loomboom.filters.JwtFilter;
 import com.loomboom.security.oauth2.OAuth2FailureHandler;
 import com.loomboom.security.oauth2.OAuth2SuccessHandler;
-import com.loomboom.service.impl.OAuth2Service;
+import com.loomboom.service.impl.OAuth2ServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,7 +40,7 @@ public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
 
-    private final OAuth2Service oAuth2Service;
+    private final OAuth2ServiceImpl oAuth2Service;
 
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
@@ -63,7 +63,7 @@ public class SecurityConfig {
                 auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .requestMatchers("/api/v1/user/**").hasRole("USER")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/oauth2/**").permitAll()
                         .requestMatchers("/**").permitAll()
                         .requestMatchers("/assets/images/**").permitAll()
@@ -78,16 +78,4 @@ public class SecurityConfig {
 
     }
 
-    // @Bean
-    // CorsFilter corsFilter() {
-    //     CorsConfiguration corsConfiguration = new CorsConfiguration();
-    //     corsConfiguration.setAllowCredentials(true);
-    //     corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-    //     corsConfiguration.addAllowedMethod("*");
-    //     corsConfiguration.addAllowedHeader("*");
-    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    //     source.registerCorsConfiguration("/**", corsConfiguration);
-    //     source.registerCorsConfiguration("/assets/images/**", corsConfiguration);
-    //     return new CorsFilter(source);
-    // }
 }

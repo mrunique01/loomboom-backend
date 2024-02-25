@@ -57,6 +57,7 @@ public class User implements UserDetails, OAuth2User {
         @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
         private List<Order> orders;
         @ManyToMany(fetch = FetchType.EAGER)
+        @JsonManagedReference
         @JoinTable(name = "user_roles", joinColumns = {
                         @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
                                         @JoinColumn(name = "role_id", referencedColumnName = "id")

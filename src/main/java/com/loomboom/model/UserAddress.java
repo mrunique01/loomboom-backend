@@ -35,7 +35,7 @@ public class UserAddress implements Serializable {
     private boolean isDefault;
     private String zip;
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User users;
 

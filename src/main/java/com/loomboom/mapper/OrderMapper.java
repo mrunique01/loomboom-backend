@@ -83,6 +83,7 @@ public class OrderMapper {
         }).collect(Collectors.toList());
         orderItemService.createOrderItems(orderItems);
         OrderResponse orderResponse = commonMapper.mapObject(order, OrderResponse.class);
+        orderResponse.setId(finalOrder.getId());
         orderResponse.setOrderItems(orderItems);
         orderResponse.setShippingDetails(shippingDetail);
         return orderResponse;
@@ -110,6 +111,14 @@ public class OrderMapper {
     public OrderResponse findOrderById(Long id) {
         return commonMapper.mapObject(orderService.findById(id), OrderResponse.class);
     }
+
+    public OrdersResponse findOrdersByUserId(Long userId) {
+        return commonMapper.mapObject(orderService.findByUserId(userId), OrdersResponse.class);
+    }
+    public OrderResponse findOrderByUserId(Long orderId,Long userId) {
+        return commonMapper.mapObject(orderService.findOrderByUserId(orderId,userId), OrderResponse.class);
+    }
+    
 
     public OrderResponse updateOrder(Long id, OrderRequest orderRequest) {
         User user = userService.getUserById(orderRequest.getUserId());

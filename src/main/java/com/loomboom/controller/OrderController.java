@@ -36,6 +36,18 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
+    @GetMapping(USER_ORDERS_BY_USER_ID)
+    public ResponseEntity<OrdersResponse> getUserOrdersByUserId(@PathVariable Long userId) {
+        OrdersResponse order = orderMapper.findOrdersByUserId(userId);
+        return ResponseEntity.ok(order);
+    }
+
+    @GetMapping(USER_ORDER_BY_ORDER_ID)
+    public ResponseEntity<OrderResponse> getUserOrderByOrderId(@PathVariable Long userId, @PathVariable Long orderId) {
+        OrderResponse order = orderMapper.findOrderByUserId(orderId, userId);
+        return ResponseEntity.ok(order);
+    }
+
     @GetMapping(ORDER_BY_ID)
     public ResponseEntity<OrderResponse> getOrderById(@PathVariable Long orderId) {
         OrderResponse order = orderMapper.findOrderById(orderId);
@@ -45,7 +57,6 @@ public class OrderController {
     @PostMapping(CREATE_ORDER)
     public ResponseEntity<OrderResponse> createOrder(
             @RequestBody @Valid OrderRequest orderRequest) {
-                
         OrderResponse orderResponse = orderMapper.createOrder(orderRequest);
         return ResponseEntity.ok(orderResponse);
     }

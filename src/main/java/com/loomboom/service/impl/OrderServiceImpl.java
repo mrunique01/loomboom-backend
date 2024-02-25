@@ -33,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
-        System.out.println(order.toString()+4520);
+        System.out.println(order.toString() + 4520);
         return orderRepository.save(order);
     }
 
@@ -66,6 +66,14 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
-  
+    @Override
+    public List<Order> findByUserId(Long userId) {
+        return orderRepository.findOrdersByUserId(userId);
+    }
+
+    @Override
+    public Order findOrderByUserId(Long orderId, Long userId) {
+        return orderRepository.findOrderByIdAndUserId(orderId, userId);
+    }
 
 }

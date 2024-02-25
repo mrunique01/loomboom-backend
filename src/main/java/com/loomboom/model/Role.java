@@ -2,6 +2,8 @@ package com.loomboom.model;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.loomboom.enums.RoleEnum;
 
 import jakarta.persistence.Column;
@@ -20,7 +22,7 @@ import lombok.Setter;
 @Table(name = "roles")
 @Getter
 @Setter
-public class Role implements Serializable{
+public class Role implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +31,7 @@ public class Role implements Serializable{
     @Enumerated(EnumType.STRING)
     @Column(unique = true)
     private RoleEnum name;
-
+    @JsonBackReference
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 

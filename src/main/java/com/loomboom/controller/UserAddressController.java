@@ -27,8 +27,14 @@ public class UserAddressController {
     private final UserAddressMapper userAddressMapper;
 
     @GetMapping(ALL_USER_ADDRESS)
-    public ResponseEntity<List<UserAddressResponse>> getUserAddress(@PathVariable Long userId) {
-        List<UserAddressResponse> userAddresss = userAddressMapper.getAllUserAddress(userId);
+    public ResponseEntity<List<UserAddressResponse>> getUserAddress() {
+        List<UserAddressResponse> userAddresss = userAddressMapper.getAllUserAddress();
+        return ResponseEntity.ok(userAddresss);
+    }
+
+    @GetMapping(USER_ADDRESS_BY_USER_ID)
+    public ResponseEntity<List<UserAddressResponse>> getUserAddressByUserId(@PathVariable Long userId) {
+        List<UserAddressResponse> userAddresss = userAddressMapper.getUserAddressByUserId(userId);
         return ResponseEntity.ok(userAddresss);
     }
 
@@ -41,17 +47,15 @@ public class UserAddressController {
 
     @PostMapping(CREATE_USER_ADDRESS)
     public ResponseEntity<UserAddressResponse> createUserAddress(
-            @RequestBody @Valid UserAddressRequest userAddressRequest,@PathVariable Long userId) {
-        UserAddressResponse userAddressResponse = userAddressMapper.createUserAddress(userAddressRequest,userId);
+            @RequestBody @Valid UserAddressRequest userAddressRequest, @PathVariable Long userId) {
+        UserAddressResponse userAddressResponse = userAddressMapper.createUserAddress(userAddressRequest, userId);
         return ResponseEntity.ok(userAddressResponse);
     }
 
     @PutMapping(UPDATE_USER_ADDRESS)
     public ResponseEntity<UserAddressResponse> updateUserAddress(@PathVariable Long userAddressId,
-            @PathVariable Long userId,
             @RequestBody @Valid UserAddressRequest userAddressRequest) {
-
-        UserAddressResponse userAddress = userAddressMapper.updateUserAddress(userAddressId, userId,
+        UserAddressResponse userAddress = userAddressMapper.updateUserAddress(userAddressId,
                 userAddressRequest);
         return ResponseEntity.ok(userAddress);
     }
@@ -59,6 +63,23 @@ public class UserAddressController {
     @DeleteMapping(DELETE_USER_ADDRESS)
     public ResponseEntity<ApiResponse> deleteUserAddress(@PathVariable Long userAddressId) {
         ApiResponse response = userAddressMapper.deleteUserAddress(userAddressId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping(UPDATE_USER_ADDRESS_BY_USER_ID)
+    public ResponseEntity<UserAddressResponse> updateUserAddressByUserId(@PathVariable Long userAddressId,
+            @PathVariable Long userId,
+            @RequestBody @Valid UserAddressRequest userAddressRequest) {
+
+        UserAddressResponse userAddress = userAddressMapper.updateUserAddressByUserId(userAddressId, userId,
+                userAddressRequest);
+        return ResponseEntity.ok(userAddress);
+    }
+
+    @DeleteMapping(DELETE_USER_ADDRESS_BY_USER_ID)
+    public ResponseEntity<ApiResponse> deleteUserAddressByUserId(@PathVariable Long userAddressId,
+            @PathVariable Long userId) {
+        ApiResponse response = userAddressMapper.deleteUserAddressByUserId(userAddressId, userId);
         return ResponseEntity.ok(response);
     }
 
