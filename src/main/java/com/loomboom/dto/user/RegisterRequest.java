@@ -1,6 +1,7 @@
 package com.loomboom.dto.user;
 
 import static com.loomboom.contants.ErrorMessage.EMAIL_CANNOT_BE_EMPTY;
+import static com.loomboom.contants.ErrorMessage.EMPTY_CAPTCHA;
 import static com.loomboom.contants.ErrorMessage.EMPTY_FIRST_NAME;
 import static com.loomboom.contants.ErrorMessage.EMPTY_GENDER;
 import static com.loomboom.contants.ErrorMessage.EMPTY_LAST_NAME;
@@ -44,4 +45,6 @@ public class RegisterRequest {
     @Length(max = 255)
     private String phone;
 
+    @NotBlank(message = EMPTY_CAPTCHA)
+    private String captcha;
 }

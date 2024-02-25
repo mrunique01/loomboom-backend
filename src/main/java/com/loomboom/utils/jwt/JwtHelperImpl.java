@@ -40,6 +40,7 @@ public class JwtHelperImpl implements JwtHelper {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
+    @SuppressWarnings("unchecked")
     private List<Role> getUserRole(String token) {
         Claims claims = getAllClaimsFromToken(token);
         return (List<Role>) claims.get(JWT_AUTHORITIES);

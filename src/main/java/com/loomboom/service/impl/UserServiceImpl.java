@@ -76,7 +76,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         if (!empty(id)) {
-            System.out.println(userRepository.findById(id).get().toString());
             return userRepository.findById(id).orElse(null);
         }
         return null;

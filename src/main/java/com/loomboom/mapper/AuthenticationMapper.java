@@ -35,8 +35,10 @@ public class AuthenticationMapper {
     }
 
     public JwtResponse registerUser(RegisterRequest registerRequest) {
+        String captcha = registerRequest.getCaptcha();
+
         User user = commonMapper.mapObject(registerRequest, User.class);
-        user = authenticationService.signup(user);
+        user = authenticationService.signup(user,captcha);
         String token = jwtHelper.createToken(user);
         JwtResponse jwtResponse = new JwtResponse();
         jwtResponse.setId(user.getId());

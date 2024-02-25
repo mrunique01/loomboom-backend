@@ -24,10 +24,11 @@ public class ErrorMessage {
     public static final String FILE_NOT_FOUND = "File Not Found";
     public static final String SOMETHING_WENT_WRONG = "Something Went Wrong";
     public static final String EMPTY_FILE = "Uploaded file is empty";
+    public static final String EMPTY_CAPTCHA = "Captcha is empty";
     public static final String ONLY_JPG_IMAGES = "Only JPG images are allowed";
     public static final String EMPTY_CATEGORY_NAME = "Category name cannot be empty";
     public static final String INVALID_CATEGORY = "Invalid Category";
     public static final String MIN_ONE_ITEM = "At least one order item is required";
-    public static final String MAX_500_CHAR =  "Additional note must be at most 500 characters";
-
+    public static final String MAX_500_CHAR = "Additional note must be at most 500 characters";
+    public static final String EMPTY_PROFILE = "Profile Details Are Empty please fill your details first";
 }
